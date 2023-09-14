@@ -1,3 +1,5 @@
+#!groovy
+
 pipeline {
     agent any
 
@@ -19,7 +21,7 @@ pipeline {
         }
         stage('Build & Test') {
                   steps {
-                                sh 'mvn clean instal'
+                                sh 'mvn clean install'
                             }
         }
     }
