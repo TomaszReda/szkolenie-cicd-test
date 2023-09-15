@@ -10,16 +10,16 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git(url: 'http://github.com/spring-projects/spring-petclinic.git', branch: 'main')
+                git(url: 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab', branch: 'main')
             }
         }
 
-//        stage('Verify') {
-//            steps {
-//                print('test')
-//                sh 'mvn clean verify'
-//            }
-//        }
+        stage('Verify') {
+            steps {
+                print('test')
+                sh 'mvn clean verify'
+            }
+        }
 
         stage('Build image') {
             steps {
