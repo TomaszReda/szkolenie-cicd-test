@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Verify') {
+        stage('Build image') {
             steps {
                 print('test')
                 sh 'mvn clean spring-boot:build-image'
