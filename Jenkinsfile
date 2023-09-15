@@ -9,19 +9,6 @@ pipeline {
     }
 
     stages {
-        stage('Check Commit Message') {
-            steps {
-                script {
-                    def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-
-                    if (commitMessage.startsWith('[ci skip]')) {
-                        currentBuild.result = 'ABORTED'
-                        error('Stopping the build due to [ci skip] in commit message.')
-                    }
-                }
-            }
-        }
-
         stage('Cleanup') {
             steps {
                 cleanWs()
