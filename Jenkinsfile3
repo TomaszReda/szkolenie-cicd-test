@@ -1,0 +1,20 @@
+#!groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab.git'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    def appImage = docker.build("test-docker-image-1", "szkolenie-cicd-jenkins-gitlab/docker-pipeline")
+                }
+            }
+        }
+    }
+}
