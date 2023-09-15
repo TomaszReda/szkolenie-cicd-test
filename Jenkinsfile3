@@ -12,7 +12,9 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    def appImage = docker.build("my-docker-image-name", "-f szkolenie-cicd-jenkins-gitlab/docker-pipeline/Dockerfile .")
+                    def dockerfilePath = "szkolenie-cicd-jenkins-gitlab/docker-pipeline/Dockerfile"
+                    def appImage = docker.build("my-docker-image-name", "-f ${dockerfilePath} szkolenie-cicd-jenkins-gitlab/docker-pipeline/")
+
                 }
             }
         }
