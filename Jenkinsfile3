@@ -18,6 +18,9 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
+//                    sh 'pwd'
+//                    sh 'ls -l'
+//                    sh 'cat docker-pipieline/Dockerfile'
                     def appImage = docker.build("my-docker-image-name", "docker-pipeline/")
                 }
             }
