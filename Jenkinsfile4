@@ -21,7 +21,8 @@ pipeline {
         }
         stage('Build imagee') {
             steps {
-                sh 'mvn clean'
+                print('test')
+//                sh 'mvn clean'
             }
         }
     }
