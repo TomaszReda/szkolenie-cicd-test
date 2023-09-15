@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab.git'
+                git(url: 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab.git', branch: 'master')
             }
         }
 
