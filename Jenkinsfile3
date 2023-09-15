@@ -18,7 +18,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    def appImage = docker.build("my-docker-image-name", "/docker-pipeline/")
+                    def appImage = docker.build("my-docker-image-name", "docker-pipeline/")
                 }
             }
         }
