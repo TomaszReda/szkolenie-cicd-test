@@ -27,8 +27,9 @@ pipeline {
 //                    changelog '.*ci skip.*'
 //                }
 //            }
-//            steps {
-            cleanWs()
+            steps {
+                cleanWs()
+            }
         }
 
         stage('Checkout') {
