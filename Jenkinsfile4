@@ -18,9 +18,9 @@ pipeline {
                 git(url: 'http://github.com/spring-projects/spring-petclinic.git', branch: 'main')
             }
         }
-        stage('Build & Test') {
+        stage('Build image') {
             steps {
-                sh 'mvn clean test'
+                sh 'mvn clean verify'
             }
         }
     }
