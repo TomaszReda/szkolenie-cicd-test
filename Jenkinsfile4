@@ -16,10 +16,17 @@ pipeline {
             }
         }
 
-        stage('Build imagee') {
+        stage('Verify') {
             steps {
                 print('test')
                 sh 'mvn clean verify'
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                print('test')
+                sh 'mvn clean spring-boot:build-image'
             }
         }
 
