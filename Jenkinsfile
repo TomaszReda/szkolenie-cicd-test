@@ -17,7 +17,7 @@ pipeline {
 //                    if (commitMessage.startsWith('ci skip')) {
 //                        error('Skipping build due to "[ci skip]" in commit message.')
 //                    }
-                    scmSkip(deleteBuild: true, skipPattern: '.*\\ci skip\\.*')
+                    scmSkip(deleteBuild: true, skipPattern:'.*ci skip.*')
                 }
             }
         }
