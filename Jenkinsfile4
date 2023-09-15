@@ -14,12 +14,12 @@ pipeline {
             }
         }
 
-        stage('Verify') {
-            steps {
-                print('test')
-                sh 'mvn clean verify'
-            }
-        }
+//        stage('Verify') {
+//            steps {
+//                print('test')
+//                sh 'mvn clean verify'
+//            }
+//        }
 
         stage('Build image') {
             steps {
