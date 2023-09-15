@@ -16,21 +16,20 @@ pipeline {
                 }
             }
         }
-    }
-
-    stage('Cleanup') {
-        steps {
-            cleanWs()
+        stage('Cleanup') {
+            steps {
+                cleanWs()
+            }
         }
-    }
-    stage('Checkout') {
-        steps {
-            git(url: 'https://github.com/TomaszReda/szkolenie-cicd-jenkins-gitlab-example', branch: 'main')
+        stage('Checkout') {
+            steps {
+                git(url: 'https://github.com/TomaszReda/szkolenie-cicd-jenkins-gitlab-example', branch: 'main')
+            }
         }
-    }
-    stage('Build & Test') {
-        steps {
-            sh 'mvn clean install'
+        stage('Build & Test') {
+            steps {
+                sh 'mvn clean install'
+            }
         }
     }
 }
