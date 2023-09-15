@@ -12,7 +12,7 @@ pipeline {
         stage('Check Commit Message') {
             when {
                 not {
-                    changelog '.*^\\[ci skip\\] .+$'
+                    changelog '.*ci skip.*'
                 }
             }
             steps {
@@ -25,7 +25,7 @@ pipeline {
         stage('Cleanup') {
             when {
                 not {
-                    changelog '.*^\\[ci skip\\] .+$'
+                    changelog '.*ci skip.*'
                 }
             }
             steps {
@@ -35,7 +35,7 @@ pipeline {
         stage('Checkout') {
             when {
                 not {
-                    changelog '.*^\\[ci skip\\] .+$'
+                    changelog '.*ci skip.*'
                 }
             }
             steps {
@@ -45,7 +45,7 @@ pipeline {
         stage('Build & Test') {
             when {
                 not {
-                    changelog '.*^\\[ci skip\\] .+$'
+                    changelog '.*ci skip.*'
                 }
             }
             steps {
