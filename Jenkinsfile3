@@ -12,6 +12,8 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
+                    sh 'pwd'
+                    sh 'ls -l'
                     def appImage = docker.build("my-docker-image-name", "szkolenie-cicd-jenkins-gitlab/docker-pipeline/")
                 }
             }
