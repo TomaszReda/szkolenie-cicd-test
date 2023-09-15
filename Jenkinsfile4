@@ -1,10 +1,10 @@
 pipeline {
+    agent any
 
-   agent {
-         docker {
-             image 'maven:3.9.2-eclipse-temurin-17'
-         }
-     }
+    tools {
+        maven 'maven-3'
+        jdk "jdk-17"
+    }
 
     stages {
         stage('Cleanup') {
