@@ -12,6 +12,10 @@ pipeline {
         stage('Check Commit Message') {
             steps {
                 script {
+                    def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    if (commitMessage.startsWith('[ci skip]')) {
+                        error('Skipping build due to "[ci skip]" in commit message.')
+                    }
                     scmSkip(deleteBuild: true, skipPattern: '.*\\[ci skip\\].*')
                 }
             }
