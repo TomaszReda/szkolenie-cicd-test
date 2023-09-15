@@ -30,25 +30,26 @@ pipeline {
 //            steps {
             cleanWs()
         }
-    }
-    stage('Checkout') {
+
+        stage('Checkout') {
 //            when {
 //                not {
 //                    changelog '.*ci skip.*'
 //                }
 //            }
-        steps {
-            git(url: 'https://github.com/TomaszReda/szkolenie-cicd-jenkins-gitlab-example', branch: 'main')
+            steps {
+                git(url: 'https://github.com/TomaszReda/szkolenie-cicd-jenkins-gitlab-example', branch: 'main')
+            }
         }
-    }
-    stage('Build & Test') {
+        stage('Build & Test') {
 //            when {
 //                not {
 //                    changelog '.*ci skip.*'
 //                }
 //            }
-        steps {
-            sh 'mvn clean install'
+            steps {
+                sh 'mvn clean install'
+            }
         }
     }
 }
