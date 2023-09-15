@@ -12,31 +12,27 @@ pipeline {
         stage('Check Commit Message') {
             steps {
                 script {
-                    def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-
-                    if (commitMessage.startsWith('[ci skip]')) {
-                        currentBuild.result = 'ABORTED'
-                        error('Stopping the build due to [ci skip] in commit message.')
-                    }
+                    scmSkip(deleteBuild: true, skipPattern: '.*\\[ci skip\\].*')
                 }
             }
         }
+    }
 
-        stage('Cleanup') {
-            steps {
-                cleanWs()
-            }
-        }
-        stage('Checkout') {
-            steps {
-                git(url: 'https://github.com/TomaszReda/szkolenie-cicd-jenkins-gitlab-example', branch: 'main')
-            }
-        }
-        stage('Build & Test') {
-            steps {
-                sh 'mvn clean install'
-            }
+    stage('Cleanup') {
+        steps {
+            cleanWs()
         }
     }
+    stage('Checkout') {
+        steps {
+            git(url: 'https://github.com/TomaszReda/szkolenie-cicd-jenkins-gitlab-example', branch: 'main')
+        }
+    }
+    stage('Build & Test') {
+        steps {
+            sh 'mvn clean install'
+        }
+    }
+}
 
 }
