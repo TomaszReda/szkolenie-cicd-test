@@ -10,28 +10,44 @@ pipeline {
 
     stages {
         stage('Check Commit Message') {
+            when {
+                not {
+                    changelog '.*^\\[ci skip\\] .+$'
+                }
+            }
             steps {
                 script {
-//                    def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-//                    print(commitMessage)
-//                    if (commitMessage.startsWith('ci skip')) {
-//                        error('Skipping build due to "ci skip" in commit message.')
-//                    }
-                    scmSkip(deleteBuild: false, skipPattern:'.*ci skip.*')
+                    print('aaa')
+//                    scmSkip(deleteBuild: false, skipPattern:'.*ci skip.*')
                 }
             }
         }
         stage('Cleanup') {
+            when {
+                not {
+                    changelog '.*^\\[ci skip\\] .+$'
+                }
+            }
             steps {
                 cleanWs()
             }
         }
         stage('Checkout') {
+            when {
+                not {
+                    changelog '.*^\\[ci skip\\] .+$'
+                }
+            }
             steps {
                 git(url: 'https://github.com/TomaszReda/szkolenie-cicd-jenkins-gitlab-example', branch: 'main')
             }
         }
         stage('Build & Test') {
+            when {
+                not {
+                    changelog '.*^\\[ci skip\\] .+$'
+                }
+            }
             steps {
                 sh 'mvn clean install'
             }
