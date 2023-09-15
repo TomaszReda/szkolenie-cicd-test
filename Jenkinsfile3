@@ -3,9 +3,14 @@ pipeline {
     agent any
 
     stages {
+        stage('clean') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage('Clone Repository') {
             steps {
-                git(url: 'http://github.com/spring-projects/spring-petclinic.git', branch: 'main')
                 git(url: 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab.git', branch: 'master')
             }
         }
