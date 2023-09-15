@@ -19,7 +19,9 @@ pipeline {
             }
         }
         stage('Build image') {
-            sh 'mvn clean spring-boot:build-image'
+            steps {
+                sh 'mvn clean spring-boot:build-image'
+            }
         }
     }
 
