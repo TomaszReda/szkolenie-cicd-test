@@ -8,6 +8,10 @@ pipeline {
         jdk "jdk-17"
     }
 
+    triggers {
+        cron('* * * * *')
+    }
+
     stages {
         stage('Check Commit Message') {
 //            when {
