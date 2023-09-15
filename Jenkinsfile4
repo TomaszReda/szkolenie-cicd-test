@@ -5,25 +5,27 @@ pipeline {
     agent {
         docker {
             image 'maven:3.9.2-eclipse-temurin-17'
+            args '-w /path/to/workspace'
         }
     }
 
     stages {
-        stage('Cleanup') {
-            steps {
-                cleanWs()
-            }
-        }
         stage('Checkout') {
             steps {
                 git(url: 'http://github.com/spring-projects/spring-petclinic.git', branch: 'main')
             }
         }
+
         stage('Build imagee') {
             steps {
                 print('test')
-//                sh 'mvn clean'
                 sh 'mvn clean verify'
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                cleanWs()
             }
         }
     }
