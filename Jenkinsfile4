@@ -27,12 +27,6 @@ pipeline {
                 sh 'mvn clean spring-boot:build-image'
             }
         }
-
-        stage('Cleanup') {
-            steps {
-                cleanWs()
-            }
-        }
     }
 
 }
