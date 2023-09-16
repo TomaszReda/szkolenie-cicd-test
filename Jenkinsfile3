@@ -2,6 +2,15 @@
 pipeline {
     agent any
 
+    environment {
+        NEXUS_URL = 'http://10.222.20.211:8082'
+        NEXUS_REPO = 'szkolenie-docker'
+        DOCKER_IMAGE_NAME = 'my-docker-image-name'
+        DOCKER_IMAGE_VERSION = 'latest'
+        DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id'
+        // Ustaw ID z Jenkins Credentials, które zawiera nazwę użytkownika i hasło do Nexusa.
+    }
+
     stages {
         stage('Clean repository') {
             steps {
@@ -19,6 +28,17 @@ pipeline {
             steps {
                 script {
                     def appImage = docker.build("my-docker-image-name", "docker-pipeline/")
+                }
+            }
+        }
+
+        stage('Docker Push to Nexus') {
+            steps {
+                script {
+                    docker.withRegistry("${NEXUS_URL}/${NEXUS_REPO}") {
+                        def appImage = docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}")
+                        appImage.push()
+                    }
                 }
             }
         }
