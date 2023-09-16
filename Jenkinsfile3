@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REGISTRY_URL = 'http://10.222.20.211:8081/repository/szkolenie'  // Zastąp właściwym adresem URL i portem Twojego Nexusa
+        DOCKER_REGISTRY_URL = 'http://10.222.20.211:8081'  // Zastąp właściwym adresem URL i portem Twojego Nexusa
         DOCKER_REPO_PATH = 'szkolenie'  // Zastąp ścieżką do Twojego repozytorium w Nexusie
         IMAGE_NAME = "my-docker-image-name"
 
@@ -35,7 +35,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
                         sh """
-                            docker login $DOCKER_REGISTRY_URL -u $NEXUS_USER -p $NEXUS_PASSWORD
+                            docker login $DOCKER_REGISTRY_URL/${DOCKER_REPO_PATH} -u $NEXUS_USER -p $NEXUS_PASSWORD
                             docker push $DOCKER_REGISTRY_URL/$DOCKER_REPO_PATH/$IMAGE_NAME
                         """
                     }
