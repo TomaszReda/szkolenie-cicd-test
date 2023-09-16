@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
+        stage('Docker Builddd') {
             steps {
                 script {
 //                    sh 'pwd'
