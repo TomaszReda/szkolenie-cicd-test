@@ -37,7 +37,7 @@ pipeline {
             stage('Docker Push to Nexus') {
                 steps {
                     script {
-                        docker.withRegistry("${NEXUS_URL}/${NEXUS_REPO}", "${DOCKER_CREDENTIALS_ID}") {
+                        docker.withRegistry("${NEXUS_URL}/${NEXUS_REPO}") {
                             def appImage = docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}")
                             appImage.push()
                         }
