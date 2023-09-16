@@ -2,47 +2,23 @@
 pipeline {
     agent any
 
-    pipeline {
-        agent any
-
-        environment {
-            NEXUS_URL = 'http://10.222.20.211:8082'
-            NEXUS_REPO = 'szkolenie'
-            DOCKER_IMAGE_NAME = 'my-docker-image-name'
-            DOCKER_IMAGE_VERSION = 'latest'
-            DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id'
-            // Ustaw ID z Jenkins Credentials, które zawiera nazwę użytkownika i hasło do Nexusa.
+    stages {
+        stage('Clean repository') {
+            steps {
+                cleanWs()
+            }
         }
 
-        stages {
-            stage('Clean repository') {
-                steps {
-                    cleanWs()
-                }
+        stage('Clone Repository') {
+            steps {
+                git(url: 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab.git', branch: 'main')
             }
+        }
 
-            stage('Clone Repository') {
-                steps {
-                    git(url: 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab.git', branch: 'main')
-                }
-            }
-
-            stage('Docker Build') {
-                steps {
-                    script {
-                        def appImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}", "docker-pipeline/")
-                    }
-                }
-            }
-
-            stage('Docker Push to Nexus') {
-                steps {
-                    script {
-                        docker.withRegistry("${NEXUS_URL}/${NEXUS_REPO}") {
-                            def appImage = docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}")
-                            appImage.push()
-                        }
-                    }
+        stage('Docker Build') {
+            steps {
+                script {
+                    def appImage = docker.build("my-docker-image-name", "docker-pipeline/")
                 }
             }
         }
