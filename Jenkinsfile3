@@ -2,45 +2,47 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_REGISTRY_URL = 'http://10.222.20.211:8082'  // Zastąp właściwym adresem URL i portem Twojego Nexusa
-        DOCKER_REPO_PATH = 'repository/szkolenie'  // Zastąp ścieżką do Twojego repozytorium w Nexusie
-        IMAGE_NAME = "my-docker-image-name"
+    pipeline {
+        agent any
 
-    }
-
-    stages {
-        stage('Clean repository') {
-            steps {
-                cleanWs()
-            }
+        environment {
+            NEXUS_URL = 'http://10.222.20.211:8082'
+            NEXUS_REPO = 'szkolenie'
+            DOCKER_IMAGE_NAME = 'my-docker-image-name'
+            DOCKER_IMAGE_VERSION = 'latest'
+            DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id' // Ustaw ID z Jenkins Credentials, które zawiera nazwę użytkownika i hasło do Nexusa.
         }
 
-        stage('Clone Repository') {
-            steps {
-                git(url: 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab.git', branch: 'main')
-            }
-        }
-
-        stage('Docker Build') {
-            steps {
-                script {
-                    def appImage = docker.build("my-docker-image-name", "docker-pipeline/")
+        stages {
+            stage('Clean repository') {
+                steps {
+                    cleanWs()
                 }
             }
-        }
 
-        stage('Push Docker Image to Nexus') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
-                        sh """
-                            docker login $DOCKER_REGISTRY_URL/${DOCKER_REPO_PATH} -u $NEXUS_USER -p $NEXUS_PASSWORD
-                            docker push $DOCKER_REGISTRY_URL/repository/szkolenie/$IMAGE_NAME:latest
-                        """
+            stage('Clone Repository') {
+                steps {
+                    git(url: 'https://github.com/rechandler12/szkolenie-cicd-jenkins-gitlab.git', branch: 'main')
+                }
+            }
+
+            stage('Docker Build') {
+                steps {
+                    script {
+                        def appImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}", "docker-pipeline/")
+                    }
+                }
+            }
+
+            stage('Docker Push to Nexus') {
+                steps {
+                    script {
+                        docker.withRegistry("${NEXUS_URL}/${NEXUS_REPO}", "${DOCKER_CREDENTIALS_ID}") {
+                            def appImage = docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}")
+                            appImage.push()
+                        }
                     }
                 }
             }
         }
     }
-}
