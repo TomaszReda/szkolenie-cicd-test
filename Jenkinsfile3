@@ -10,7 +10,8 @@ pipeline {
             NEXUS_REPO = 'szkolenie'
             DOCKER_IMAGE_NAME = 'my-docker-image-name'
             DOCKER_IMAGE_VERSION = 'latest'
-            DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id' // Ustaw ID z Jenkins Credentials, które zawiera nazwę użytkownika i hasło do Nexusa.
+            DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id'
+            // Ustaw ID z Jenkins Credentials, które zawiera nazwę użytkownika i hasło do Nexusa.
         }
 
         stages {
@@ -46,3 +47,4 @@ pipeline {
             }
         }
     }
+}
