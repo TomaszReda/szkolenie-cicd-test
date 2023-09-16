@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY_URL = 'http://10.222.20.211:8082'  // Zastąp właściwym adresem URL i portem Twojego Nexusa
-        DOCKER_REPO_PATH = 'repository/szkolenie/'  // Zastąp ścieżką do Twojego repozytorium w Nexusie
+        DOCKER_REPO_PATH = 'repository/szkolenie'  // Zastąp ścieżką do Twojego repozytorium w Nexusie
         IMAGE_NAME = "my-docker-image-name"
 
     }
