@@ -34,7 +34,10 @@ pipeline {
         stage('Docker Push to Nexus') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'clientFoo', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        print(${USERNAME})
+                        print(${PASSWORD})
+                        print('aaaaaaaaaaaaa')
                         docker.withRegistry("${NEXUS_URL}/${NEXUS_REPO}", "${USERNAME}:${PASSWORD}") {
                             def appImage = docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}")
                             appImage.push()
